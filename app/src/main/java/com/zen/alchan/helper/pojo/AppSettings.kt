@@ -18,5 +18,7 @@ class AppSettings(
     var sendFollowsPushNotification: Boolean? = null,
     var sendRelationsPushNotification: Boolean? = null,
     var mergePushNotifications: Boolean? = null,
-    var pushNotificationMinimumHours: Int? = null
+    var pushNotificationMinimumHours: Int? = null,
+    var allAnimeListPosition: Int? = null,
+    var allMangaListPosition: Int? = null
 )

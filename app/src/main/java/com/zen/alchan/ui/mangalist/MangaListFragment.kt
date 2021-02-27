@@ -150,7 +150,13 @@ class MangaListFragment : Fragment() {
                 }
             }
 
-            viewModel.tabItemList.add(0, MediaListTabItem(getString(R.string.all), it.lists?.sumBy { list -> list.entries?.size ?: 0 } ?: 0))
+            val allListPosition = viewModel.allListPosition ?: 0
+            val allMediaListTabItem = MediaListTabItem(getString(R.string.all), it.lists?.sumBy { list -> list.entries?.size ?: 0 } ?: 0)
+            if (allListPosition >= viewModel.tabItemList.size) {
+                viewModel.tabItemList.add(allMediaListTabItem)
+            } else {
+                viewModel.tabItemList.add(allListPosition, allMediaListTabItem)
+            }
 
             if (viewModel.selectedTab >= viewModel.tabItemList.size) {
                 viewModel.selectedTab = viewModel.tabItemList.size - 1

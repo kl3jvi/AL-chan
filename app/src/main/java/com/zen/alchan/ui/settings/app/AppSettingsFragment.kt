@@ -25,6 +25,7 @@ import com.zen.alchan.helper.utils.Utility
 import kotlinx.android.synthetic.main.fragment_app_settings.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import type.MediaType
 import type.StaffLanguage
 
 /**
@@ -80,6 +81,8 @@ class AppSettingsFragment : Fragment() {
             sendRelationsPushNotificationsCheckBox.isChecked = viewModel.appSettings.sendRelationsPushNotification == true
             mergePushNotificationsCheckBox.isChecked = viewModel.appSettings.mergePushNotifications == true
             viewModel.pushNotificationsMinHours = viewModel.appSettings.pushNotificationMinimumHours
+            viewModel.allAnimeListPosition = viewModel.appSettings.allAnimeListPosition
+            viewModel.allMangaListPosition = viewModel.appSettings.allMangaListPosition
             viewModel.isInit = true
         }
 
@@ -117,6 +120,12 @@ class AppSettingsFragment : Fragment() {
 
         selectedThemeText.text = viewModel.selectedAppTheme?.name.replaceUnderscore()
         selectedThemeText.setOnClickListener { showAppThemeDialog() }
+
+        allAnimeListPositionText.text = ((viewModel.allAnimeListPosition ?: 0) + 1).toString()
+        allAnimeListPositionText.setOnClickListener { showAllListPositionDialog(MediaType.ANIME) }
+
+        allMangaListPositionText.text = ((viewModel.allMangaListPosition ?: 0) + 1).toString()
+        allMangaListPositionText.setOnClickListener { showAllListPositionDialog(MediaType.MANGA) }
 
         pushNotificationMinHoursText.text = "${viewModel.pushNotificationsMinHours} ${getString(R.string.hour).setRegularPlural(viewModel.pushNotificationsMinHours)}"
         pushNotificationMinHoursText.setOnClickListener { showPushNotificationMinHoursDialog() }
@@ -178,6 +187,45 @@ class AppSettingsFragment : Fragment() {
                 negativeColorItem.setCardBackgroundColor(ContextCompat.getColor(activity!!, palette.negativeColor))
             }
         })
+        dialog.show(childFragmentManager, null)
+    }
+
+    private fun showAllListPositionDialog(type: MediaType) {
+        val dialog = AllListPositionDialog()
+        dialog.setListener(object : AllListPositionDialog.AllListPositionListener {
+            override fun passPosition(pos: Int) {
+                if (type == MediaType.ANIME) {
+                    viewModel.allAnimeListPosition = pos - 1
+                    allAnimeListPositionText.text = pos.toString()
+                } else {
+                    viewModel.allMangaListPosition = pos - 1
+                    allMangaListPositionText.text = pos.toString()
+                }
+            }
+        })
+        val bundle = Bundle()
+        if (type == MediaType.ANIME) {
+            bundle.putInt(AllListPositionDialog.CURRENT_POSITION, viewModel.allAnimeListPosition ?: 0 + 1)
+            var maxSize = 1
+            maxSize += if (viewModel.viewerData?.mediaListOptions?.animeList?.splitCompletedSectionByFormat == true) {
+                Constant.DEFAULT_SPLIT_ANIME_LIST_ORDER.size
+            } else {
+                Constant.DEFAULT_ANIME_LIST_ORDER.size
+            }
+            maxSize += viewModel.viewerData?.mediaListOptions?.animeList?.customLists?.size ?: 0
+            bundle.putInt(AllListPositionDialog.MAX_POSITION, maxSize)
+        } else {
+            bundle.putInt(AllListPositionDialog.CURRENT_POSITION, viewModel.allMangaListPosition ?: 0 + 1)
+            var maxSize = 1
+            maxSize += if (viewModel.viewerData?.mediaListOptions?.mangaList?.splitCompletedSectionByFormat == true) {
+                Constant.DEFAULT_SPLIT_MANGA_LIST_ORDER.size
+            } else {
+                Constant.DEFAULT_MANGA_LIST_ORDER.size
+            }
+            maxSize += viewModel.viewerData?.mediaListOptions?.mangaList?.customLists?.size ?: 0
+            bundle.putInt(AllListPositionDialog.MAX_POSITION, maxSize)
+        }
+        dialog.arguments = bundle
         dialog.show(childFragmentManager, null)
     }
 

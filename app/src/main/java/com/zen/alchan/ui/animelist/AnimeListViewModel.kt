@@ -43,6 +43,10 @@ class AnimeListViewModel(private val mediaListRepository: MediaListRepository,
         mediaListRepository.updateAnimeListEntryResponse
     }
 
+    val allListPosition
+        get() = appSettingsRepository.appSettings.allAnimeListPosition
+
+
     val allowAdultContent: Boolean
         get() = userRepository.currentUser?.options?.displayAdultContent ?: false
 
@@ -96,7 +100,7 @@ class AnimeListViewModel(private val mediaListRepository: MediaListRepository,
 
     fun getSelectedList(): ArrayList<MediaList> {
         val selectedList = ArrayList<MediaList>()
-        if (selectedTab == 0) {
+        if (selectedTab == allListPosition || (allListPosition ?: 0 >= tabItemList.size && selectedTab == tabItemList.lastIndex)) {
             tabItemList.forEachIndexed { index, mediaListTabItem ->
                 if (index != 0) {
                     val checkList = ArrayList(animeListData.value?.lists?.find { list -> list.name == mediaListTabItem.status }?.entries ?: listOf())

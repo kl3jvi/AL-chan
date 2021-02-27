@@ -79,6 +79,7 @@ class AppSettingsRepositoryImpl(private val appSettingsManager: AppSettingsManag
         appSettingsManager.setUserPreferences(userPreferences)
     }
 
+
     override fun clearStorage() {
         appSettingsManager.clearStorage()
     }

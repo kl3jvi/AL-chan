@@ -2,18 +2,28 @@ package com.zen.alchan.ui.settings.app
 
 import androidx.lifecycle.ViewModel
 import com.zen.alchan.data.repository.AppSettingsRepository
+import com.zen.alchan.data.repository.OtherUserRepository
+import com.zen.alchan.data.repository.UserRepository
+import com.zen.alchan.data.response.User
 import com.zen.alchan.helper.enums.AppColorTheme
 import com.zen.alchan.helper.pojo.AppSettings
 import type.StaffLanguage
 
-class AppSettingsViewModel(private val appSettingsRepository: AppSettingsRepository) : ViewModel() {
+class AppSettingsViewModel(private val appSettingsRepository: AppSettingsRepository,
+                           private val userRepository: UserRepository
+) : ViewModel() {
 
     var isInit = false
     var selectedAppTheme: AppColorTheme? = null
     var pushNotificationsMinHours: Int? = null
+    var allAnimeListPosition: Int? = null
+    var allMangaListPosition: Int? = null
 
     val appSettings: AppSettings
         get() = appSettingsRepository.appSettings
+
+    val viewerData: User?
+        get() = userRepository.currentUser
 
     fun setAppSettings(
         circularAvatar: Boolean = true,
@@ -45,7 +55,9 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
             sendFollowsPushNotification = sendFollowsPushNotifications,
             sendRelationsPushNotification = sendRelationsPushNotifications,
             mergePushNotifications = mergePushNotifications,
-            pushNotificationMinimumHours = pushNotificationsMinHours
+            pushNotificationMinimumHours = pushNotificationsMinHours,
+            allAnimeListPosition = allAnimeListPosition,
+            allMangaListPosition = allMangaListPosition
         ))
     }
 }

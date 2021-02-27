@@ -2,6 +2,7 @@ package com.zen.alchan.ui.mangalist
 
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.zen.alchan.data.repository.AppSettingsRepository
 import com.zen.alchan.data.repository.ListStyleRepository
 import com.zen.alchan.data.repository.MediaListRepository
 import com.zen.alchan.data.repository.UserRepository
@@ -15,6 +16,7 @@ import type.ScoreFormat
 class MangaListViewModel(private val mediaListRepository: MediaListRepository,
                          private val listStyleRepository: ListStyleRepository,
                          private val userRepository: UserRepository,
+                         private val appSettingsRepository: AppSettingsRepository,
                          val gson: Gson): ViewModel() {
 
     var tabItemList = ArrayList<MediaListTabItem>()
@@ -40,6 +42,9 @@ class MangaListViewModel(private val mediaListRepository: MediaListRepository,
     val updateMangaListEntryResponse by lazy {
         mediaListRepository.updateMangaListEntryResponse
     }
+
+    val allListPosition
+        get() = appSettingsRepository.appSettings.allMangaListPosition
 
     val allowAdultContent: Boolean
         get() = userRepository.currentUser?.options?.displayAdultContent ?: false
@@ -96,7 +101,7 @@ class MangaListViewModel(private val mediaListRepository: MediaListRepository,
 
     fun getSelectedList(): ArrayList<MediaList> {
         val selectedList = ArrayList<MediaList>()
-        if (selectedTab == 0) {
+        if (selectedTab == allListPosition || (allListPosition ?: 0 >= tabItemList.size && selectedTab == tabItemList.lastIndex)) {
             tabItemList.forEachIndexed { index, mediaListTabItem ->
                 if (index != 0) {
                     val checkList = ArrayList(mangaListData.value?.lists?.find { list -> list.name == mediaListTabItem.status }?.entries ?: listOf())

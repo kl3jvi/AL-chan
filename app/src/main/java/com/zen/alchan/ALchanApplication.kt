@@ -166,7 +166,7 @@ class ALchanApplication : Application() {
         viewModel { AnimeListEditorViewModel(get(), get(), gson) }
 
         // manga list
-        viewModel { MangaListViewModel(get(), get(), get(), gson) }
+        viewModel { MangaListViewModel(get(), get(), get(), get(), gson) }
         viewModel { MangaListEditorViewModel(get(), get(), gson) }
 
         // browse
@@ -214,7 +214,7 @@ class ALchanApplication : Application() {
         viewModel { StatsDetailViewModel(get(), get(), gson) }
         viewModel { UserReviewsViewModel(get(), get()) }
         viewModel { FollowsViewModel(get(), get()) }
-        viewModel { AppSettingsViewModel(get()) }
+        viewModel { AppSettingsViewModel(get(), get()) }
         viewModel { AniListSettingsViewModel(get()) }
         viewModel { ListSettingsViewModel(get()) }
         viewModel { NotificationsSettingsViewModel(get()) }

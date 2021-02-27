@@ -24,6 +24,8 @@ class AppSettingsManagerImpl(private val localStorage: LocalStorage) : AppSettin
             if (savedSettings.sendRelationsPushNotification == null) savedSettings.sendRelationsPushNotification = true
             if (savedSettings.mergePushNotifications == null) savedSettings.mergePushNotifications = false
             if (savedSettings.pushNotificationMinimumHours == null) savedSettings.pushNotificationMinimumHours = 1
+            if (savedSettings.allAnimeListPosition == null) savedSettings.allAnimeListPosition = 0
+            if (savedSettings.allMangaListPosition == null) savedSettings.allMangaListPosition = 0
             // add more to here when adding new settings
             return savedSettings
         }

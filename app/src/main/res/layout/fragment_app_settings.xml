@@ -213,6 +213,54 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="@dimen/marginNormal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="?themeRegularFont"
+                    android:text="&quot;All\&quot; Anime list position"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/marginNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/allAnimeListPositionText"
+                    style="?themeRegularClickableFont"
+                    android:foreground="?selectableItemBackground"
+                    android:padding="@dimen/iconPadding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="@dimen/marginNormal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="?themeRegularFont"
+                    android:text="&quot;All\&quot; Manga list position"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/marginNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/allMangaListPositionText"
+                    style="?themeRegularClickableFont"
+                    android:foreground="?selectableItemBackground"
+                    android:padding="@dimen/iconPadding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
             <com.google.android.material.textview.MaterialTextView
                 style="?themeRegularBoldFont"
                 android:text="@string/memory_saver"
